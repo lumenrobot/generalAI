@@ -34,7 +34,8 @@ namespace Agent
                 {
                     string routingKey;
                     ConnectionFactory factory = new ConnectionFactory();
-                    factory.Uri = "amqp://lumen:lumen@localhost/%2F";
+                    //factory.Uri = "amqp://lumen:lumen@localhost/%2F";
+                    factory.Uri = "amqp://localhost/%2F";
                     connection = factory.CreateConnection();
                     channelSend = connection.CreateModel(); // untuk mengirim
                     channelData = connection.CreateModel();

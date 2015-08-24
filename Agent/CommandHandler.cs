@@ -38,6 +38,8 @@ namespace Agent
                     channelForReply.BasicConsume(queue.QueueName, true, consumer);
                     isHandling = true;
 
+                    // rest first on app start!
+                    NS_rest();
 
                     return true;
                 }

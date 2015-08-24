@@ -97,14 +97,19 @@ namespace Agent
                 command.NS_tts("assalamu alaikum");
                 command.NS_tts(greeting);
                 command.NS_tts("my name is lumen, I am robot guide");
-                state = 2;
-                Console.WriteLine("change state to 2");
+                // FIXME: hack to make it just work for demo
+                //state = 2;
+                //Console.WriteLine("change state to 2");
+                state = 8;
+                command.NS_record("what can I help you");
+                Console.WriteLine("HACK FORCE change state to 8");
             }
             restartTimer();
         }
+
         public void dataCollect_faceNameReceive(object sender, FaceName name)
         {
-            //Console.WriteLine("incoming name handler {0}", name.Name);
+            Console.WriteLine("incoming name handler {0}", (object) name.Name);
             if (state == 2)
             {
                 if (name.Name == "unknown")
@@ -130,15 +135,16 @@ namespace Agent
         {
 
         }
+
         public void dataCollect_recordingDataReceive(object sender, RecordingData record)
         {
             Console.WriteLine("recording finished, waiting for recognition process...");
             byte[] check = Convert.FromBase64String(record.content);
+            // write to temporary file before sending to RabbitMQ
             File.WriteAllBytes("D:/hellowav.wav", check);
             command.LA_genderIdentify(record.content, record.name);
             command.LA_speechRecognize(record.content,record.name);
         }
-       
 
         //event handler untuk timer 
         public void restartTimer()
