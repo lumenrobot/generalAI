@@ -6,6 +6,7 @@ using System.Timers;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using AIMLbot;
 
 namespace Agent
 {
@@ -29,8 +30,19 @@ namespace Agent
         string userGender = "";
         int state = 1;
         int hasAskName = 0;
+        Bot myBot;
+        User myUser;
+
         public void startWelcoming()
         {
+            //inisialisi AIML
+            myBot = new Bot();
+            myBot.loadSettings();
+            myUser = new User("consoleUser", myBot);
+            myBot.isAcceptingUserInput = false;
+            myBot.loadAIMLFromFiles();
+            myBot.isAcceptingUserInput = true; 
+
             connection = new Connection();
             connection.connect();
             dataCollect = new DataCollect(connection);
@@ -506,10 +518,18 @@ namespace Agent
                 }
                 else
                 {
-                    command.NS_tts("would you like to repeat your request " + userGender);
-                    command.NS_record("what can I help you");
+                    //command.NS_tts("would you like to repeat your request " + userGender);
+                    //command.NS_record("what can I help you");
+                    //state = 8;
+                    //Console.WriteLine("change state to 8");
+
+                    Request r = new Request(text, myUser, myBot);
+                    Result res = myBot.Chat(r);
+
+                    command.NS_tts(res.Output);
+                    command.NS_tts("anything else " + userGender);
+                    command.NS_record("any question");
                     state = 8;
-                    Console.WriteLine("change state to 8");
                 }
 
             }
