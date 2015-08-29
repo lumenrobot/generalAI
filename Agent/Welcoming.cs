@@ -70,7 +70,25 @@ namespace Agent
             Console.WriteLine("starting welcoming behavior...");
 
             command.startHandling();
+
+
+            command.NS_goToPosture("Stand", 0.8f);
+            command.NS_tts("assalamoo alaikoom wurrohmatoollahi wabarokatuh");
+            command.NS_tts(greeting);
+            command.NS_tts("my name is lumen, I am robot guide");
+            // FIXME: hack to make it just work for demo
+            //state = 2;
+            //Console.WriteLine("change state to 2");
+            state = 8;
+            command.NS_record("what can I help you");
+            Console.WriteLine("HACK FORCE change state to 8");
+
             dataCollect.startCollecting();
+
+            //
+           
+
+
         }
         public void stopWelcoming()
         {
@@ -105,7 +123,7 @@ namespace Agent
 
             if (state == 1)
             {
-                command.NS_goToPosture("Stand", 0.5f);
+                command.NS_goToPosture("Stand", 0.8f);
                 command.NS_tts("assalamu alaikum");
                 command.NS_tts(greeting);
                 command.NS_tts("my name is lumen, I am robot guide");
@@ -348,25 +366,25 @@ namespace Agent
                     t_Stand.Elapsed -= timerHandler;
                     command.NS_photoPose();
                     Thread.Sleep(10000);
-                    command.NS_goToPosture("Stand", 0.5f);
+                    command.NS_goToPosture("Stand", 0.8f);
                     t_Stand.Elapsed += timerHandler;
                     command.NS_tts("anything else can I help you " + userGender + "?");
                     command.NS_record("what can I help you");
                     state = 8;
                     Console.WriteLine("change state to 8");
                 }
-                else if (text.Contains("no") || text.Contains("enough"))
-                {
-                    command.NS_tts("thank you for coming");
-                    command.NS_tts("see you again");
-                    command.NS_goodBye();
-                    command.NS_rest();
-                    state = 1;
-                    Console.WriteLine("change state to 8");
-                }
+                //else if (text.Contains("no") || text.Contains("enough"))
+                //{
+                //    command.NS_tts("thank you for coming");
+                //    command.NS_tts("see you again");
+                //    command.NS_goodBye();
+                //    command.NS_rest();
+                //    state = 1;
+                //    Console.WriteLine("change state to 8");
+                //}
 
                 //list pertanyaan
-                else if (text.Contains("what") && text.Contains("name"))
+                else if (text.Contains("what") && text.Contains("your") && text.Contains("name"))
                 {
                     state = 12;
                     command.NS_tts("my name is lumen");
@@ -502,19 +520,44 @@ namespace Agent
                     command.NS_tts("anything else " + userGender);
                     command.NS_record("any question");
                 }
-                else if (text.Contains("name"))
-                {
-                    state = 12;
-                    command.NS_tts("my name is lumen");
-                    command.NS_tts("anything else " + userGender);
-                    command.NS_record("any question");
-                }
                 else if (text.Contains("old"))
                 {
                     command.NS_tts("I am very young");
                     command.NS_tts("anything else " + userGender);
                     command.NS_record("any question");
                     state = 12;
+                }
+
+                // basic postures
+                else if (text.Contains("please") && text.Contains("rest"))
+                {
+                    command.NS_rest();
+                    command.NS_record("any question");
+                    state = 12;
+                }
+                else if (text.Contains("please") && text.Contains("stand"))
+                {
+                    command.NS_goToPosture("Stand", 0.8f);
+                    command.NS_record("any question");
+                    state = 12;
+                }
+                else if (text.Contains("please") && text.Contains("sit"))
+                {
+                    command.NS_goToPosture("Sit", 0.8f);
+                    command.NS_record("any question");
+                    state = 12;
+                }
+                else if (text.Contains("please") && text.Contains("crouch"))
+                {
+                    command.NS_goToPosture("Crouch", 0.8f);
+                    command.NS_record("any question");
+                    state = 12;
+                }
+
+                else if (text == string.Empty)
+                {
+                    command.NS_record("any question");
+                    Debug.WriteLine("anything else");
                 }
                 else
                 {
@@ -527,10 +570,14 @@ namespace Agent
                     Result res = myBot.Chat(r);
 
                     command.NS_tts(res.Output);
+                    Console.WriteLine("answer: {0}", (object)res.Output);
                     command.NS_tts("anything else " + userGender);
                     command.NS_record("any question");
                     state = 8;
                 }
+
+                if(text!=null)
+                    Debug.WriteLine(text);
 
             }
             #endregion

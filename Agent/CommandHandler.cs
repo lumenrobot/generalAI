@@ -245,6 +245,7 @@ namespace Agent
             }
             else
             {
+                Console.WriteLine("Command Handler is not started yet");
                 //MessageBox.Show("Command Handler is not started yet", "CommandHandler");
             }
         }
