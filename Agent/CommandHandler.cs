@@ -237,11 +237,23 @@ namespace Agent
         {
             if (isHandling)
             {
+
+                NS_tts(recordingName);
+
+                // USE TEXT INPUT
+                //Console.Write("What do you want to say? TYPE HERE: ");
+                //string inp = Console.ReadLine();
+                //recognizer hasil = new recognizer { name = "aaa", result = inp, date = DateTime.Now.ToString() };
+                //string body = JsonConvert.SerializeObject(hasil); //serialisasi data menjadi string
+                //this.sendCommand(body, "lumen.audio.speech.recognition");
+
+                // USE SPEECH RECOGNITION
                 Console.WriteLine("please say something");
                 Parameter par = new Parameter { recordingName = recordingName };
-                Command com = new Command { type = "audiodevice", method = "record",parameter = par };
+                Command com = new Command { type = "audiodevice", method = "record", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
                 this.sendCommand(body, "avatar.NAO.command");
+
             }
             else
             {
