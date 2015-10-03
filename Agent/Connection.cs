@@ -51,8 +51,8 @@ namespace Agent
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.text.to.speech");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.speech.recognition");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.gender.identification");
-                    channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.NAO.data.tactile");
-                    channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.NAO.data.recording");
+                    channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.nao1.data.tactile");
+                    channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.nao1.data.recording");
 
                     consumerData = new QueueingBasicConsumer(channelData);
                     consumerFaceLocation = new QueueingBasicConsumer(channelData);

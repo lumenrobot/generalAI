@@ -39,7 +39,7 @@ namespace trigger_record
                 string doRecordStr = JsonConvert.SerializeObject(com);
                 var doRecordBytes = Encoding.UTF8.GetBytes(doRecordStr);
                 Console.WriteLine("Sending {0} ...", (object)doRecordStr);
-                channelSend.BasicPublish("amq.topic", "avatar.NAO.command", properties,
+                channelSend.BasicPublish("amq.topic", "avatar.nao1.command", properties,
                     doRecordBytes);
 
                 Console.WriteLine("Waiting (Terminate App to stop)...");

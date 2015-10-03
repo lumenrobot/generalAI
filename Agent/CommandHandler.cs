@@ -76,7 +76,7 @@ namespace Agent
             properties.ReplyTo = queue.QueueName;
             //Console.WriteLine("sending command corrId={0} replyTo={1}", properties.CorrelationId, properties.ReplyTo);
             byte[] buffer = Encoding.UTF8.GetBytes(command);
-            if (routingKey == "avatar.NAO.command")
+            if (routingKey == "avatar.nao1.command")
             {
                 channel.BasicPublish("amq.topic", routingKey, properties, buffer);
                 connection.corrId = corId;
@@ -96,7 +96,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "wakeUp" };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -109,11 +109,11 @@ namespace Agent
             {
                 Command com1 = new Command { type = "motion", method = "rest" };
                 string body1 = JsonConvert.SerializeObject(com1);
-                this.sendCommand(body1, "avatar.NAO.command");
+                this.sendCommand(body1, "avatar.nao1.command");
                 //Parameter par = new Parameter { jointName = new List<string> { "HeadYaw", "HeadPitch" }, angles = new List<float> { 0.8f, 0.8f } };
                 //Command com2 = new Command { type = "motion", method = "setAngles", parameter = par };
                 //string body2 = JsonConvert.SerializeObject(com2);
-                //this.sendCommand(body2, "avatar.NAO.command");
+                //this.sendCommand(body2, "avatar.nao1.command");
             }
             else
             {
@@ -127,7 +127,7 @@ namespace Agent
                 Parameter par = new Parameter { jointName = jointName, angles = angles, speed = speed };
                 Command com = new Command { type = "motion", method = "setAngles", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -141,7 +141,7 @@ namespace Agent
                 Parameter par = new Parameter { jointName = jointName, angles = angles, speed = speed };
                 Command com = new Command { type = "motion", method = "changeAngles", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -155,7 +155,7 @@ namespace Agent
                 Parameter par = new Parameter { jointName = jointName, stiffnessess = stiffnesses };
                 Command com = new Command { type = "motion", method = "setStiffnesses", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -168,7 +168,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "moveInit" };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -182,7 +182,7 @@ namespace Agent
                 Parameter par = new Parameter { x = x, y = y, tetha = tetha };
                 Command com = new Command { type = "motion", method = "moveTo", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Agent
                 Parameter par = new Parameter { text = toSay };
                 Command com = new Command { type = "texttospeech", method = "say", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -210,7 +210,7 @@ namespace Agent
                 Parameter par = new Parameter { postureName = Posture, speed = speed };
                 Command com = new Command { type = "Posture", method = "goToPosture", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -226,7 +226,7 @@ namespace Agent
                 Parameter par = new Parameter { wavFile = wav };
                 Command com = new Command { type = "audiodevice", method = "sendremotebuffertooutput", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -252,7 +252,7 @@ namespace Agent
                 Parameter par = new Parameter { recordingName = recordingName };
                 Command com = new Command { type = "audiodevice", method = "record", parameter = par };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
 
             }
             else
@@ -267,7 +267,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "photopose"};
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -280,7 +280,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "goodbye" };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -293,7 +293,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "dance" };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {
@@ -306,7 +306,7 @@ namespace Agent
             {
                 Command com = new Command { type = "motion", method = "sing" };
                 string body = JsonConvert.SerializeObject(com);
-                this.sendCommand(body, "avatar.NAO.command");
+                this.sendCommand(body, "avatar.nao1.command");
             }
             else
             {

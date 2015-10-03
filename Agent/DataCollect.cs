@@ -63,11 +63,11 @@ namespace Agent
                         {
                             consumerAudio3_Received(this, e);
                         }
-                        else if (e.RoutingKey == "avatar.NAO.data.tactile")
+                        else if (e.RoutingKey == "avatar.nao1.data.tactile")
                         {
                             consumerAvatar1_Received(this, e);
                         }
-                        else if (e.RoutingKey == "avatar.NAO.data.recording")
+                        else if (e.RoutingKey == "avatar.nao1.data.recording")
                         {
                             consumerAvatar2_Received(this, e);
                         }
