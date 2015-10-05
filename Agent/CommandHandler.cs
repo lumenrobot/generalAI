@@ -19,8 +19,8 @@ namespace Agent
         NAudio.Wave.WaveFileWriter streamWriter;
         public bool isRecording = false;
         Connection connection;
-        QueueingBasicConsumer replyConsumer;
-        QueueDeclareOk replyQueue;
+        //QueueingBasicConsumer replyConsumer;
+        //QueueDeclareOk replyQueue;
 
         public CommandHandler(Connection connection)
         {
@@ -35,14 +35,14 @@ namespace Agent
                 if (!isHandling)
                 {
                     channel = connection.channelSend;
-                    Debug.WriteLine("Create model...");
-                    IModel channelForReply = connection.connection.CreateModel();
-                    Debug.WriteLine("QueueDeclare...");
-                    replyQueue = channelForReply.QueueDeclare("", false, false, true, null);
-                    Debug.WriteLine("QueueingBasicConsumer...");
-                    replyConsumer = new QueueingBasicConsumer(channelForReply);
-                    Debug.WriteLine("BasicConsume...");
-                    channelForReply.BasicConsume(replyQueue.QueueName, true, replyConsumer);
+                    //Debug.WriteLine("Create model...");
+                    //IModel channelForReply = connection.connection.CreateModel();
+                    //Debug.WriteLine("QueueDeclare...");
+                    //replyQueue = channelForReply.QueueDeclare("", false, false, true, null);
+                    //Debug.WriteLine("QueueingBasicConsumer...");
+                    //replyConsumer = new QueueingBasicConsumer(channel);
+                    //Debug.WriteLine("BasicConsume...");
+                    //channelForReply.BasicConsume(replyQueue.QueueName, true, replyConsumer);
                     isHandling = true;
 
                     // rest first on app start!
@@ -80,20 +80,29 @@ namespace Agent
         private void sendCommand(string command, string routingKey)
         {
             //Console.WriteLine("executing command");
-
-            var properties = channel.CreateBasicProperties();
-            string corId = Guid.NewGuid().ToString();
-            properties.CorrelationId = corId;
-            properties.ReplyTo = replyQueue.QueueName;
-            //Console.WriteLine("sending command corrId={0} replyTo={1}", properties.CorrelationId, properties.ReplyTo);
             byte[] buffer = Encoding.UTF8.GetBytes(command);
             if (routingKey == "avatar.nao1.command" || routingKey == "lumen.speech.expression")
             {
-                channel.BasicPublish("amq.topic", routingKey, properties, buffer);
-                connection.corrId = corId;
-                Console.WriteLine("Waiting for {0}'s reply for {1} {2}", routingKey, corId, replyQueue.QueueName);
-                replyConsumer.Queue.Dequeue();
-                Console.WriteLine("{0}'s reply received for {1} {2}", routingKey, corId, replyQueue.QueueName);
+                var replyQueue = channel.QueueDeclare();
+                try
+                {
+                    var properties = channel.CreateBasicProperties();
+                    //string corId = Guid.NewGuid().ToString();
+                    //properties.CorrelationId = corId;
+                    //Console.WriteLine("sending command corrId={0} replyTo={1}", properties.CorrelationId, properties.ReplyTo);
+                    properties.ReplyTo = replyQueue.QueueName;
+                    //connection.corrId = corId;
+                    channel.BasicPublish("amq.topic", routingKey, properties, buffer);
+                    Console.WriteLine("Waiting for {0}'s reply for {1}", routingKey, replyQueue.QueueName);
+                    var replyConsumer = new QueueingBasicConsumer(channel);
+                    channel.BasicConsume(replyQueue.QueueName, true, replyConsumer);
+                    replyConsumer.Queue.Dequeue();
+                    Console.WriteLine("{0}'s reply received for {1}", routingKey, replyQueue.QueueName);
+                }
+                finally
+                {
+                    channel.QueueDeleteNoWait(replyQueue.QueueName, false, false);
+                }
             }
             else
             {
