@@ -106,11 +106,17 @@ namespace Agent
                 userGender = "ma'am";
             }
         }
-        public void dataCollect_SpeechRecognizedReceive(object sender, recognizer speech)
+        public void dataCollect_SpeechRecognizedReceive(object sender, RecognizedSpeech speech)
         {
             if (state!=1)
             {
-                this.getResponse(speech.name, speech.result.ToLower());
+                if (speech.results.Count > 0 && speech.results[0].alternatives.Count > 0)
+                {
+                    this.getResponse("aaa", speech.results[0].alternatives[0].transcript.ToLower());
+                } else
+                {
+                    this.getResponse("aaa", "");
+                }
             }
         }
 

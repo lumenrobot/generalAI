@@ -49,7 +49,7 @@ namespace Agent
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.visual.face.recognition");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.visual.human.detection");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.text.to.speech");
-                    channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.speech.recognition");
+                    channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.speech.recognition");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "lumen.audio.gender.identification");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.nao1.data.tactile");
                     channelData.QueueBind(queueData.QueueName, "amq.topic", "avatar.nao1.data.recording");

@@ -20,8 +20,94 @@ namespace Agent
         public string method { get; set; }
         [JsonProperty("parameter")]
         public Parameter parameter { get; set; }
-
     }
+
+    public class PostureChange
+    {
+        [JsonProperty("@type")]
+        public string type { get; set; }
+        public string postureId { get; set; }
+        public double speed { get; set; }
+
+        public PostureChange()
+        {
+            type = "PostureChange";
+        }
+    }
+
+    public class RecordAudio
+    {
+        [JsonProperty("@type")]
+        public string type { get; }
+        [JsonProperty]
+        public double duration { get; set; }
+
+        public RecordAudio() {
+            type = "RecordAudio";
+        }
+    }
+
+    public enum ActingScript
+    {
+        GOOD_BYE,
+        PHOTO_POSE,
+        DANCE_GANGNAM,
+        SING_MANUK,
+        SING_UPTOWN
+    };
+
+    public class ActingPerformance
+    {
+        [JsonProperty("@type")]
+        public string type { get; }
+        [JsonProperty]
+        public ActingScript script { get; set; }
+        [JsonProperty]
+        public double restAfterPerformance { get; set; }
+
+        public ActingPerformance()
+        {
+            type = "ActingPerformance";
+        }
+    }
+
+    public class Rest
+    {
+        [JsonProperty("@type")]
+        public string type { get; }
+
+        public Rest()
+        {
+            type = "Rest";
+        }
+    }
+
+    public class WakeUp
+    {
+        [JsonProperty("@type")]
+        public string type { get; }
+
+        public WakeUp()
+        {
+            type = "WakeUp";
+        }
+    }
+
+    public class Speech
+    {
+        [JsonProperty("@type")]
+        public string type { get; }
+        [JsonProperty]
+        public string markup { get; set;  }
+        [JsonProperty]
+        public string avatarId { get; set; }
+
+        public Speech()
+        {
+            this.type = "Speech";
+        }
+    }
+
     public class Parameter
     {
         //RobotPosture parameter

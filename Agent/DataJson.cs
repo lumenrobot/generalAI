@@ -13,14 +13,32 @@ namespace Agent
         [JsonProperty("content")]
         public String content { get; set; }
     }
-    public class recognizer
+
+    public class RecognizedSpeech
     {
-        [JsonProperty("name")]
-        public string name { get; set; }
+        [JsonProperty("@type")]
+        public string type { get; set; }
         [JsonProperty("result")]
-        public string result { get; set; }
-        [JsonProperty("date")]
-        public string date { get; set; }
+        public List<SpeechResult> results { get; set; }
+        [JsonProperty("dateCreated")]
+        public string dateCreated{ get; set; }
+    }
+
+    public class SpeechResult
+    {
+        [JsonProperty("alternative")]
+        public List<SpeechAlternative> alternatives
+        {
+            get; set;
+        }
+        [JsonProperty("final")]
+        public Boolean finalResult;
+    }
+
+    public class SpeechAlternative
+    {
+        public string transcript;
+        public double confidence;
     }
 
     public class sound

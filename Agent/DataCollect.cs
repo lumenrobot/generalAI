@@ -17,7 +17,7 @@ namespace Agent
         public FaceName faceName;
         public UpperBodyLocation upperBodyLocation;
         public soundResult textToSpeech;
-        public recognizer speechRecognized;
+        public RecognizedSpeech speechRecognized;
         public genderResult gender;
         public bool isCollecting = false;
         Connection connection;
@@ -55,7 +55,7 @@ namespace Agent
                         {
                             consumerAudio1_Received(this, e);
                         }
-                        else if (e.RoutingKey == "lumen.audio.speech.recognition")
+                        else if (e.RoutingKey == "lumen.speech.recognition")
                         {
                             consumerAudio2_Received(this, e);
                         }
@@ -171,14 +171,14 @@ namespace Agent
             textToSpeech = JsonConvert.DeserializeObject<soundResult>(body, setting);
         }
 
-        public delegate void SpeechRecognition_callback(object sender, recognizer r);
+        public delegate void SpeechRecognition_callback(object sender, RecognizedSpeech r);
         public event SpeechRecognition_callback SpeechRecognizedReceive;
         public void consumerAudio2_Received(object sender, BasicDeliverEventArgs ev)
         {
             //melakukan query terhadap speech recognition
             string body = Encoding.UTF8.GetString(ev.Body);
             JsonSerializerSettings setting = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
-            speechRecognized = JsonConvert.DeserializeObject<recognizer>(body, setting);
+            speechRecognized = JsonConvert.DeserializeObject<RecognizedSpeech>(body, setting);
             if (this.SpeechRecognizedReceive != null)
             {
                 this.SpeechRecognizedReceive(this, speechRecognized);
