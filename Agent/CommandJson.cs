@@ -93,18 +93,20 @@ namespace Agent
         }
     }
 
-    public class Speech
+    public class CommunicateAction
     {
         [JsonProperty("@type")]
         public string type { get; }
         [JsonProperty]
-        public string markup { get; set;  }
+        public string inLanguage { get; set; }
+        [JsonProperty("object")]
+        public string theObject { get; set;  }
         [JsonProperty]
         public string avatarId { get; set; }
 
-        public Speech()
+        public CommunicateAction()
         {
-            this.type = "Speech";
+            this.type = "CommunicateAction";
         }
     }
 

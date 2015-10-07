@@ -218,7 +218,7 @@ namespace Agent
             if (isHandling)
             {
                 Console.WriteLine("TTS: {0}", toSay);
-                var com = new Speech { markup = toSay, avatarId = "nao1" };
+                var com = new CommunicateAction { inLanguage = "en-US", theObject = toSay, avatarId = "nao1" };
                 string body = JsonConvert.SerializeObject(com);
                 this.sendCommand(body, "lumen.speech.expression");
             }
