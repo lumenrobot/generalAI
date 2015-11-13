@@ -103,12 +103,12 @@ namespace Agent
         {
             if (isCollecting)
             {
-                connection.consumerVisual1.Received -= new BasicDeliverEventHandler(consumerVisual1_Received);
-                connection.consumerVisual2.Received -= new BasicDeliverEventHandler(consumerVisual2_Received);
-                connection.consumerVisual3.Received -= new BasicDeliverEventHandler(consumerVisual3_Received);
-                connection.consumerAudio1.Received -= new BasicDeliverEventHandler(consumerAudio1_Received);
-                connection.consumerAudio2.Received -= new BasicDeliverEventHandler(consumerAudio2_Received);
-                connection.consumerAudio3.Received -= new BasicDeliverEventHandler(consumerAudio3_Received);
+                connection.consumerVisual1.Received -= new EventHandler<BasicDeliverEventArgs>(consumerVisual1_Received);
+                connection.consumerVisual2.Received -= new EventHandler<BasicDeliverEventArgs>(consumerVisual2_Received);
+                connection.consumerVisual3.Received -= new EventHandler<BasicDeliverEventArgs>(consumerVisual3_Received);
+                connection.consumerAudio1.Received -= new EventHandler<BasicDeliverEventArgs>(consumerAudio1_Received);
+                connection.consumerAudio2.Received -= new EventHandler<BasicDeliverEventArgs>(consumerAudio2_Received);
+                connection.consumerAudio3.Received -= new EventHandler<BasicDeliverEventArgs>(consumerAudio3_Received);
                 isCollecting = false;
                 return true;
             }
